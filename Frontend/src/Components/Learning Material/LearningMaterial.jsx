@@ -237,24 +237,35 @@ function LearningMaterial() {
                 <Row gutter={[16, 16]}>
                   {filteredNotes.map((note, index) => (
                     <Col span={24} key={index}>
-                      <Card title={note.title} bordered={false}>
+                      {/* <Card title={note.title} bordered={false}>  //old  */}
+                      <Card title={note.title || "No Title"} bordered={false}>
                         <div>
                           <Button
                             style={{ marginRight: "10px" }}
-                            onClick={() => window.open(note.pdf, "_blank")}
+                            // onClick={() => window.open(note.pdf, "_blank")} old
+                            onClick={() => note.pdf ? window.open(note.pdf, "_blank") : null}
                           >
                             View
                           </Button>
                           <Button
                             type="primary"
                             style={{ border: "none" }}
+                            // onClick={() => {
+                            //   const link = document.createElement("a");
+                            //   link.href = note.pdf;
+                            //   link.setAttribute("download", note.title);
+                            //   document.body.appendChild(link);
+                            //   link.click();
+                            //   link.remove();
                             onClick={() => {
-                              const link = document.createElement("a");
-                              link.href = note.pdf;
-                              link.setAttribute("download", note.title);
-                              document.body.appendChild(link);
-                              link.click();
-                              link.remove();
+                              if (note.pdf) {
+                                const link = document.createElement("a");
+                                link.href = note.pdf;
+                                link.setAttribute("download", note.title);
+                                document.body.appendChild(link);
+                                link.click();
+                                link.remove();
+                              }
                             }}
                           >
                             Download
